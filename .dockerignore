@@ -1,0 +1,32 @@
+# Ignore Python bytecode files
+*.pyc
+*.pyo
+__pycache__
+
+# Ignore Jupyter notebook checkpoints
+.ipynb_checkpoints
+
+# Ignore virtual environments
+venv/
+env/
+.venv/
+
+# Ignore the .git directory
+.git
+.gitignore
+
+# Ignore Dockerfile and docker-compose files
+Dockerfile
+docker-compose.yml
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+
+# Ignore environment variable files
+.env
+
+# Ignore output directories (if any)
+output/
+
+
