@@ -65,4 +65,17 @@ if val == 0:
     #accuracy_score = model_evaluation(model_gru, test_text_padded, y_test)
     performance_report(model_gru, test_text_padded, y_test, 'gru', 'train')
 else:
-    process = subprocess.Popen(['python3', 'deployment.py'], cwd='deployment', shell=True)
+    process = subprocess.Popen(['python3', 'deployment.py'], 
+                               stdout=subprocess.PIPE,
+                               stderr=subprocess.STDOUT,
+                               )
+    
+    for stdout_line in process.stdout:
+        print(stdout_line.decode('utf-8'))
+
+    for stderr_line in process.stderr:
+        print(stderr_line.decode('utf-8'))
+    
+    stdout, stderr = process.communicate()
+    print(stdout)
+    print(stderr)
