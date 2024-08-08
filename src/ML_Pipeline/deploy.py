@@ -1,11 +1,14 @@
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import numpy as np
 import pandas as pd
-import os
 from dotenv import load_dotenv
 from flask import Flask, jsonify
 from pymongo import MongoClient, errors
-from keras.models import model_from_json
+from tensorflow.keras.models import model_from_json
 from ML_Pipeline.utils import load_model
 from ML_Pipeline import tokenizer
 from ML_Pipeline.clean_data import clean_data

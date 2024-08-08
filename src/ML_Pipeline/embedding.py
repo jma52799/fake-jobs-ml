@@ -3,13 +3,17 @@ import wget
 import pandas as pd
 import numpy as np
 from zipfile import ZipFile
-from keras.layers import Embedding
+from tensorflow.keras.layers import Embedding
 from ML_Pipeline.constants import *
 
-def extractGlovefile():
-    wget.download('http://nlp.stanford.edu/data/glove.6B.zip', out=GLOVE_DIR)
-    with ZipFile(GLOVE_FILE_PATH, 'r') as zipObj:
-        zipObj.extractall(GLOVE_DIR)
+def extractGloVeFile():
+    if not os.path.exists(GLOVE_FILE_PATH):
+        print("Downloading GloVe file")
+        wget.download('http://nlp.stanford.edu/data/glove.6B.zip', out=GLOVE_DIR)
+        with ZipFile(GLOVE_FILE_PATH, 'r') as zipObj:
+            zipObj.extractall(GLOVE_DIR)
+    else:
+        return
 
 
 def read_glove_embeddings(glove_file_path=GLOVE_FILE_PATH):

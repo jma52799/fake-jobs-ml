@@ -1,5 +1,5 @@
-from keras.models import Sequential
-from keras.layers import LSTM, GRU, Dense, Dropout
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import LSTM, GRU, Dense, Dropout
 from ML_Pipeline.constants import *
 
 def build_lstm(embedding_layer):

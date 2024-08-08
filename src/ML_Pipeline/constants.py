@@ -1,6 +1,6 @@
 #--- Clean Data Constants ---#
 remove_columns = ['job_id', 'location']
-label = ['fraudelent']
+label = ['fraudulent']
 text_features = ['title', 'company_profile', 'description', 'requirements', 'benefits']
 
 #--- Preprocess Data Constants ---#

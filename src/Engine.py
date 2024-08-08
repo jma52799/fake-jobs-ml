@@ -1,16 +1,30 @@
+import nltk
+from nltk.data import find
+
+try:
+    find('corpora/stopwords')
+except LookupError:
+    nltk.download('stopwords')
+
+try:
+    find('corpora/wordnet')
+except LookupError:
+    nltk.download('wordnet')
+    
+
 import subprocess
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from ML_Pipeline.constants import *
 from ML_Pipeline.clean_data import clean_data
-from ML_Pipeline.embedding import build_embeddings
+from ML_Pipeline.embedding import build_embeddings, extractGloVeFile
 from ML_Pipeline.evaluate_model import model_evaluation, plot_training_history, performance_report
 from ML_Pipeline.preprocess_data import preprocess_dataset
 from ML_Pipeline.store_model import save_model_to_file
-from ML_Pipeline.tokenizer import initialize_tokenizer, save_tokenizer, texts_to_sequences, pad_sequences
+from ML_Pipeline.tokenizer import initialize_tokenizer, save_tokenizer, texts_to_sequences, pad_sequences_data
 from ML_Pipeline.build_models import build_lstm, build_gru
 
-val = int(input('Train - 0\nDevelopment Deployment - 1\n'))
+val = int(input('\n\nChoose an option to begin:\nTrain - 0\nDevelopment Deployment - 1\n'))
 if val == 0:
     df = pd.read_csv('../input/job_postings.csv', on_bad_lines='skip')
 
@@ -37,14 +51,15 @@ if val == 0:
     save_tokenizer(tokenizer)
 
     print('Converting text to sequence...')
-    train_text_seq = tokenizer.texts_to_sequences(X_train, tokenizer)
-    test_text_seq = tokenizer.texts_to_sequences(X_test, tokenizer)
+    train_text_seq = texts_to_sequences(X_train, tokenizer)
+    test_text_seq = texts_to_sequences(X_test, tokenizer)
 
     print('Padding sequence...')
-    train_text_padded = pad_sequences(train_text_seq)
-    test_text_padded = pad_sequences(test_text_seq)
+    train_text_padded = pad_sequences_data(train_text_seq)
+    test_text_padded = pad_sequences_data(test_text_seq)
 
     # Feature Engineering (Embedding)
+    extractGloVeFile()
     print('Building embedding layer...')
     embedding_layer = build_embeddings(tokenizer)
 
@@ -55,6 +70,7 @@ if val == 0:
     plot_training_history(history)
     save_model_to_file(model_lstm, 'lstm', 1)
     #accuracy_score = model_evaluation(model_lstm, test_text_padded, y_test)
+    print('Saving performance report for lstm...')
     performance_report(model_lstm, test_text_padded, y_test, 'lstm', 'train') 
 
     print('Training GRU model')
@@ -63,18 +79,17 @@ if val == 0:
     plot_training_history(history)
     save_model_to_file(model_gru, 'gru', 1)
     #accuracy_score = model_evaluation(model_gru, test_text_padded, y_test)
+    print('Saving performance report for gru...')
     performance_report(model_gru, test_text_padded, y_test, 'gru', 'train')
 else:
-    process = subprocess.Popen(['python3', 'deployment.py'], 
+    process = subprocess.Popen(['python3', 'ML_Pipeline/deploy.py'], 
                                stdout=subprocess.PIPE,
                                stderr=subprocess.STDOUT,
+                               cwd='/Users/jasonma/Documents/fake-jobs-ml/src/',
                                )
     
     for stdout_line in process.stdout:
         print(stdout_line.decode('utf-8'))
-
-    for stderr_line in process.stderr:
-        print(stderr_line.decode('utf-8'))
     
     stdout, stderr = process.communicate()
     print(stdout)
