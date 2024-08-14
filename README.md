@@ -21,7 +21,7 @@ Online job posts have a uniform data format: text. By using NLP techniques and D
 ## How to use this project
 1. __Clone the repo:__ `git clone https://github.com/jma52799/fake-jobs-ml.git`
 2. __Install libraries:__ `pip install requirements.txt OR pip3 install requirements.txt`
-3. __Run model:__ `python Engine.py OR python3 Engine.py (cd into the directory containing Engine.py first)`
+3. __Run code:__ `python Engine.py OR python3 Engine.py (cd into the directory containing Engine.py first)`
 4. Visit the ipynb notebook to see the results and execution of training the models from the beginning [Link to ipynb notebook](https://github.com/jma52799/fake-jobs-ml/blob/main/fakejobs.ipynb)
 
 ## Approach
