@@ -26,23 +26,23 @@ Online job posts have a uniform data format: text. By using NLP techniques and D
 
 ## Approach
 ### Data exploration and cleaning
-1. Understand the data characterisitcs (Number of records, features, descriptive statistics for the text columns, and the count for both labels)
-2. Clean the data (Removing null records,  drop unused features)
+1. Understanding the data characterisitcs (Number of records, features, descriptive statistics for the text columns, and the count for both labels)
+2. Cleaned the data (Removing null records,  drop unused features)
 
 ### Data Preprocessing: NLTK processing
-1. Preprocess the data (Merging text features, remove special characters and stop words, lemmetization)
+1. Preprocessed the data (Merging text features, remove special characters and stop words, lemmetization)
 
 ### Sequence Data Preparation
-1. Tokenize the text after preprocessing
-  - Find the optimal vocab size
-  - Initialize and fit the tokenizer with the determined vocab size
+1. Tokenized the text after preprocessing
+  - Found the optimal vocab size
+  - Initialized and fitted the tokenizer with the determined vocab size
 2. Sequence data transformation
-  - Convert text to sequences
-  - Pad the sequences to uniform length
+  - Converted text to sequences
+  - Padded the sequences to uniform length
 
 ### Word Embeddings
-1. Download the pre-trained word vectors (GloVe from Standford)
-2. Use GloVe to convert text into meaningful numberical vectors
+1. Downloaded the pre-trained word vectors (GloVe from Standford)
+2. Used GloVe to convert text into meaningful numberical vectors
 
 ### Build Sequence Models
 The sequence models trained are LSTM and GRU and both were build with the embedding layer, Dense, and Dropout
@@ -51,5 +51,4 @@ The sequence models trained are LSTM and GRU and both were build with the embedd
 The performance of the model training is evaluated based on accuracy. And a confusion matrix is used to evaluate the performance of both models on the test dataset.
 
 ## ML Pipeline
-The *src* directory contains the *ML_pipeline* folder, which contains different files that perform a step in creating the deep learning models.
-The *output* folder contains the reusable trained models as well as the models' weights
+The *src* directory contains the *ML_pipeline* folder, which contains different files that are appropriately named after the step they perform towards creating the deep learning models.
