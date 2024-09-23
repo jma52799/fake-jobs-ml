@@ -26,11 +26,22 @@ Online job posts have a uniform data format: text. By using NLP techniques and D
 
 ## Approach
 ### Data exploration and cleaning
-1. Understanding the data characterisitcs (Number of records, features, descriptive statistics for the text columns, and the count for both labels)
-2. Cleaned the data (Removing null records,  drop unused features)
+Using the job listing data, I performed initial data exploration and cleaning to prepare it for further analysis and modeling. This involved examining the characteristics of each feature, dealing with missing data, and ensuring that the dataset was appropriately structured for training a classification model.
+
+First, I analyzed the data by checking the number of records, features, and labels. Specifically, the dataset contains 17,880 job listings, with 18 different features, such as job title, description, company profile, and location. The primary target variable, fraudulent, indicates whether a job listing is legitimate (0) or fraudulent (1). However, during our exploration, we discovered significant class imbalance. To clean the dataset, I removed rows with missing values in essential fields and dropped columns that were irrelevant.
+
+<img width="563" alt="Data Exploration" src="https://github.com/user-attachments/assets/07af8a89-7b7f-403f-8dbe-0d44877cf610">
 
 ### Data Preprocessing: NLTK processing
-1. Preprocessed the data (Merging text features, remove special characters and stop words, lemmetization)
+1. To begin, I combined multiple textual features into a single column,"text". Features like "description", "company_profile", and "requirements", etc., were merged into one text column. This allowed us to treat the job listing’s textual information as a single entity, which is crucial for NLP models.
+
+2. Next, I applied various common NLTK preprocessing techniques This step involved:
+- Converting text to lowercase 
+- Removing URLs and special characters
+- Stop word removal 
+- Lemmatization
+
+<img width="745" alt="NLTK preprocessing" src="https://github.com/user-attachments/assets/63e56319-2778-43a0-a3e6-a8d2027285cc">
 
 ### Sequence Data Preparation
 1. Tokenized the text after preprocessing
