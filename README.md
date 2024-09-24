@@ -35,12 +35,11 @@ First, I analyzed the data by checking the number of records, features, and labe
 ### Data Preprocessing: NLTK processing
 1. To begin, I combined multiple textual features into a single column,"text". Features like "description", "company_profile", and "requirements", etc., were merged into one text column. This allowed us to treat the job listing’s textual information as a single entity, which is crucial for NLP models.
 
-2. Next, I applied various common NLTK preprocessing techniques This step involved:
+2. Next, I applied various common NLTK preprocessing techniques This step (Lemmatization) involved:
 - Converting text to lowercase 
 - Removing URLs and special characters
 - Stop word removal 
-- Lemmatization
-
+  
 <img width="745" alt="NLTK preprocessing" src="https://github.com/user-attachments/assets/63e56319-2778-43a0-a3e6-a8d2027285cc">
 
 ### Sequence Data Preparation
@@ -68,6 +67,7 @@ The sequence models trained are LSTM and GRU and both were build with the embedd
 
 ### Saving The Models' Performances
 The performance of the models are saved for future reference. 
+
 ![Performance Report](https://github.com/user-attachments/assets/d0e2d1de-0477-4142-a143-0868c807c93a)
 
 ## Summary and Future Works
