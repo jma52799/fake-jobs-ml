@@ -16,7 +16,7 @@ Online job posts have a uniform data format: text. By using NLP techniques and D
 
 ## Tech Stack
 * Language: Python
-* Libraries: Scikit-learn, Tensorflow, Keras, GloVe, nltk, pandas, numpy
+* Libraries: Scikit-learn, Tensorflow, Keras, GloVe, nltk, pandas, numpy, Matplotlib
 
 ## How to use this project
 1. __Clone the repo:__ `git clone https://github.com/jma52799/fake-jobs-ml.git`
@@ -28,7 +28,7 @@ Online job posts have a uniform data format: text. By using NLP techniques and D
 ### Data exploration and cleaning
 Using the job listing data, I performed initial data exploration and cleaning to prepare it for further analysis and modeling. This involved examining the characteristics of each feature, dealing with missing data, and ensuring that the dataset was appropriately structured for training a classification model.
 
-First, I analyzed the data by checking the number of records, features, and labels. Specifically, the dataset contains 17,880 job listings, with 18 different features, such as job title, description, company profile, and location. The primary target variable, fraudulent, indicates whether a job listing is legitimate (0) or fraudulent (1). However, during our exploration, we discovered significant class imbalance. To clean the dataset, I removed rows with missing values in essential fields and dropped columns that were irrelevant.
+First, I analyzed the data by checking the number of records, features, and labels. Specifically, the dataset contains 17,880 job listings, with 18 different features, such as job title, description, company profile, and location. The primary target variable, fraudulent, indicates whether a job listing is legitimate (0) or fraudulent (1), which as shown below, revealed a significant class imbalance. To clean the dataset, I removed rows with missing values in essential fields and dropped columns that were irrelevant.
 
 <img width="563" alt="Data Exploration" src="https://github.com/user-attachments/assets/07af8a89-7b7f-403f-8dbe-0d44877cf610">
 
@@ -44,22 +44,34 @@ First, I analyzed the data by checking the number of records, features, and labe
 <img width="745" alt="NLTK preprocessing" src="https://github.com/user-attachments/assets/63e56319-2778-43a0-a3e6-a8d2027285cc">
 
 ### Sequence Data Preparation
-1. Tokenized the text after preprocessing
-  - Found the optimal vocab size
-  - Initialized and fitted the tokenizer with the determined vocab size
+1. Tokenization
+
+A tokenizer was initialized and fitted to the training data to identify all the unique words. The total number of unique words came out to be 136,213. However such a large vocabulary increases the complexity and memory requirements of the model. So I analyzed the frequencies of the words to determine an optimal vocab size. The cumulative word frequency distribution plot as shown below revealed that a just a small subset of the words accounted for the majority of the total word occurences. The steep rise at the beginning of the curve shows that words with high frequencies take up a high percentage of the total word frequency. And after the steep rise, the tail (rest of the curve) flattens which means that a large proportion of words appear infrequently. After finding the optimal vocab size, a new tokenizer was initialized with the optimal vocab size and fitted to the training data. 
+
+![Cumulative word frequency distribution](https://github.com/user-attachments/assets/3923d53a-ac59-45a5-9c82-813d8b074819)
+
 2. Sequence data transformation
-  - Converted text to sequences
-  - Padded the sequences to uniform length
+
+The "text" column was converted into sequences of tokens, where each word was converted to a corresponding token from the tokenizer's word index. I then padded the sequences to ensure that all input sequences had the same length, which helps the deep learning models to process the data consistently.
 
 ### Word Embeddings
-1. Downloaded the pre-trained word vectors (GloVe from Standford)
-2. Used GloVe to convert text into meaningful numberical vectors
+For this project, I used pre-trained word embeddings to transform text data into meaningful numerical vectors that capture the semantic information of words. I chose the GloVe (Global Vectors for Word Representation) model developed by Stanford, and used the 100-dimensional version to balance performance and computational efficiency. I mapped the tokenizer's word index (created during tokenization) to the pre-trained GloVe embeddings, and built an embedding matrix that contained the GloVe vectors for the most frequent words in our dataset. This matrix was then used as the weight matrix for the embedding layer in our neural network model. I ensured the embedding layer was "non-trainable" so that the pre-trained GloVe embeddings would not be updated during models' training. 
 
-### Build Sequence Models
-The sequence models trained are LSTM and GRU and both were build with the embedding layer, Dense, and Dropout
+### Build And Evaluate The Sequence Models
+The sequence models trained are LSTM and GRU and both were build with the embedding layer, Dense (for classification), and Dropout (to prevent overfitting). I chose LSTM and GRU because both are good at learning and remembering long-term dependencies, which is ideal for long documents such as a job description. The first plot shows training and validation (test data) accuracy for the LSTM model and the second plot (below) shows the training and validation (test data) accuracy for the GRU model. Finally, a confusion matrix was generated to evaluate the performance of both models on the test dataset.
 
-### Validate trained model
-The performance of the model training is evaluated based on accuracy. And a confusion matrix is used to evaluate the performance of both models on the test dataset.
+![LSTM](https://github.com/user-attachments/assets/73772d5d-6c39-4c30-8aa8-2eec45622380)
+(LSTM - achieved accuracy slightly above 95%)
+
+![GRU](https://github.com/user-attachments/assets/30551a4f-6091-4c39-be01-ddf497cc7c15)
+(GRU - - achieved accuracy slightly above 95%)
+
+### Saving The Models' Performances
+The performance of the models are saved for future reference. 
+![Performance Report](https://github.com/user-attachments/assets/d0e2d1de-0477-4142-a143-0868c807c93a)
+
+## Summary and Future Works
+Although both models achieved a high accuracy, using accuracy might not be the best measurement because the dataset is severely imablanced. As shown above, the recall is very low which suggests that the models are missing the vast majority of the fradulent job listings. A better analysis of the models would need to see the recall improve significantly. But it would require more amount of fradulent data to help balance the dataset. Or techniqus for balancing categorical data and data with extreme imbalance can be deploy to handle the extreme imbalance in this dataset.
 
 ## ML Pipeline
 The *src* directory contains the *ML_pipeline* folder, which contains different files that are appropriately named after the step they perform towards creating the deep learning models.
