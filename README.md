@@ -66,7 +66,7 @@ The sequence models trained are LSTM and GRU and both were build with the embedd
 (GRU - - achieved accuracy slightly above 95%)
 
 ### Saving The Models' Performances
-The performance of the models are saved for future reference. 
+The performance of the models are saved for future reference. Additionally, the weights used by each model for training is also saved so they're reusable in the future.
 
 ![Performance Report](https://github.com/user-attachments/assets/d0e2d1de-0477-4142-a143-0868c807c93a)
 
